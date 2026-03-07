@@ -1,0 +1,6 @@
+__pycache__/
+output/
+settings.json
+.accepted
+*.exe
+.venv/
