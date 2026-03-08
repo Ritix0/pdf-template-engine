@@ -4,3 +4,4 @@ settings.json
 .accepted
 *.exe
 .venv/
+dist

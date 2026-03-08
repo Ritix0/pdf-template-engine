@@ -205,13 +205,30 @@ class PApp(ctk.CTk):
         self.e_7 = self.p16(s3, self.p4("l_7"), self.p4("d_7"), 0, 0)
         self.e_8 = self.p16(s3, self.p4("l_8"), self.p4("d_8"), 0, 1)
         self.e_9 = self.p16(s3, self.p4("l_9"), self.p4("d_9"), 0, 2)
-        ctk.CTkLabel(s3, text=self.p4("l_10")).grid(row=2, column=0, padx=10, pady=(5, 0), sticky="w")
-        self.o_1 = ctk.CTkOptionMenu(s3, values=self.p4("list_1", ["-"])); self.o_1.grid(row=3, column=0, padx=10, pady=(0, 10), sticky="ew")
-        self.e_10 = self.p16(s3, self.p4("l_11"), self.p4("d_11"), 1, 1)
-        self.e_11 = self.p16(s3, self.p4("l_12"), self.p4("d_12"), 1, 2)
-        ctk.CTkLabel(s3, text=self.p4("l_13")).grid(row=4, column=0, padx=10, pady=(5, 0), sticky="w")
-        self.o_2 = ctk.CTkOptionMenu(s3, values=self.p4("list_2", ["-"])); self.o_2.grid(row=5, column=0, padx=10, pady=(0, 10), sticky="ew")
-        self.ch_2 = ctk.CTkCheckBox(s3, text=self.p4("c_2")); self.ch_2.grid(row=5, column=1, padx=10, pady=(0, 10), sticky="w")
+        
+        self.ch_v_m = ctk.CTkCheckBox(s3, text=self.p4("c_4"), font=ctk.CTkFont(size=10))
+        self.ch_v_m.grid(row=2, column=1, padx=10, pady=(0, 5), sticky="nw")
+        self.ch_g_m = ctk.CTkCheckBox(s3, text=self.p4("c_4"), font=ctk.CTkFont(size=10))
+        self.ch_g_m.grid(row=2, column=2, padx=10, pady=(0, 5), sticky="nw")
+
+        ctk.CTkLabel(s3, text=self.p4("l_10")).grid(row=3, column=0, padx=10, pady=(5, 0), sticky="w")
+        self.o_1 = ctk.CTkOptionMenu(s3, values=self.p4("list_1", ["-"])); self.o_1.grid(row=4, column=0, padx=10, pady=(0, 10), sticky="ew")
+        
+        ctk.CTkLabel(s3, text=self.p4("l_11")).grid(row=3, column=1, padx=10, pady=(5, 0), sticky="w")
+        self.e_10 = ctk.CTkEntry(s3, placeholder_text=self.p4("d_11"))
+        self.e_10.grid(row=4, column=1, padx=10, pady=(0, 10), sticky="ew")
+        self.e_10.insert(0, self.p4("d_11"))
+        self.p17(self.e_10)
+
+        ctk.CTkLabel(s3, text=self.p4("l_12")).grid(row=3, column=2, padx=10, pady=(5, 0), sticky="w")
+        self.e_11 = ctk.CTkEntry(s3, placeholder_text=self.p4("d_12"))
+        self.e_11.grid(row=4, column=2, padx=10, pady=(0, 10), sticky="ew")
+        self.e_11.insert(0, self.p4("d_12"))
+        self.p17(self.e_11)
+
+        ctk.CTkLabel(s3, text=self.p4("l_13")).grid(row=5, column=0, padx=10, pady=(5, 0), sticky="w")
+        self.o_2 = ctk.CTkOptionMenu(s3, values=self.p4("list_2", ["-"])); self.o_2.grid(row=6, column=0, padx=10, pady=(0, 10), sticky="ew")
+        self.ch_2 = ctk.CTkCheckBox(s3, text=self.p4("c_2")); self.ch_2.grid(row=6, column=1, padx=10, pady=(0, 10), sticky="w")
         s4 = self.p15(self.p4("s_4"), 3)
         self.ch_3 = ctk.CTkCheckBox(s4, text=self.p4("c_3"), command=self.p19); self.ch_3.grid(row=0, column=0, padx=10, pady=10, sticky="w")
         self.d_i = []
@@ -293,11 +310,19 @@ class PApp(ctk.CTk):
         v_m = self.e_5.get().strip(); dm = self.p4("map", {}); d_k = self.p4("d_k", {})
         if not v_m: messagebox.showwarning(self.p4("msg_w"), self.p4("msg_f")); return
 
+        v_8 = self.e_8.get().strip().upper()
+        if self.ch_v_m.get() or not v_8:
+            v_8 = self.p4("v_abs_2") if self.p4("pe_9") in inf else self.p4("v_abs_1")
+            
+        v_9 = self.e_9.get().strip().upper()
+        if self.ch_g_m.get() or not v_9:
+            v_9 = self.p4("v_abs_1")
+
         dt = {
             dm["f_1"]: v_m, dm["f_2"]: v_m, dm["f_3"]: self.e_6.get() or v_m,
-            dm["f_4"]: self.e_7.get().upper(), dm["f_5"]: self.e_8.get().upper(),
-            dm["f_6"]: self.e_9.get().upper(), dm["f_7"]: self.o_1.get(),
-            dm["f_8"]: self.e_10.get().upper(), dm["f_9"]: self.e_11.get(),
+            dm["f_4"]: self.e_7.get().upper(), dm["f_5"]: v_8,
+            dm["f_6"]: v_9, dm["f_7"]: self.o_1.get().upper(),
+            dm["f_8"]: self.e_10.get().upper(), dm["f_9"]: self.e_11.get().upper(),
             dm["f_10"]: self.e_1.get().upper(), dm["f_11"]: self.e_2.get(),
         }
         if getattr(tm, self.p4("tm_k_6"), False):
